@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<appSettings>
+  <serverAPIUrl>http://eu-be-sos05:21105/ca</serverAPIUrl>
+</appSettings>
