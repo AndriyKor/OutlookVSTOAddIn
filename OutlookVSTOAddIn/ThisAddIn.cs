@@ -103,6 +103,7 @@ namespace OutlookVSTOAddIn
             Globals.Ribbons[inspector].ManageTaskPaneRibbon.toggleButtonShowTaskPane.Checked =
                 taskPane.Visible;
 
+            /*
             if (taskPane.Visible)
             {
                 if (Global.ItemTypes.Instance.StatusCode == HttpStatusCode.OK)
@@ -117,6 +118,7 @@ namespace OutlookVSTOAddIn
                     }
                 }
             }
+            */
         }
 
         void InspectorWrapper_Close()

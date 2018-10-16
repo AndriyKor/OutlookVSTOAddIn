@@ -9,17 +9,59 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Configuration;
+using System.Collections.Specialized;
 
 namespace OutlookVSTOAddIn.Global
 {
     class Common
     {
+        // New Fields & Properties
+        public static bool IsCredentialCorrect { get; set; } = false;
+
+        /*
+        public static Dictionary<string, string> divisionList = new Dictionary<string, string>(
+            (ConfigurationManager.GetSection("documentGrops") as System.Collections.Hashtable)
+                 .Cast<System.Collections.DictionaryEntry>()
+                 .ToDictionary(n => n.Key.ToString(), n => n.Value.ToString())
+    );
+    
+        public static Dictionary<string, string> divisionList
+        {
+            get
+            {
+                Dictionary<string, string> result = new Dictionary<string, string>();
+
+                // Grab the document groups listed in the App.config and add them to result list.
+                var DocumentGroups = ConfigurationManager.GetSection("documentGroups") as NameValueCollection;
+                if (DocumentGroups != null)
+                {
+                    foreach (var key in DocumentGroups.AllKeys)
+                    {
+                        //string serverValue = DocumentGroups.GetValues(key).FirstOrDefault();
+                        result.Add(key, DocumentGroups[key]);
+                    }
+                }
+
+                return result;
+            }
+        }
+        */
+
         private static NetworkCredential credentials;
         // private static string urlBase = "http://eu-be-sos05:21105/ca"; // TST
         // private static string urlBase = "http://eu-be-sos05:20105/ca"; // PRD
-        private static string urlFull = urlBase + "/secure-jsp/mds/api";
+        
+        //private static string urlFull = urlBase + "/secure-jsp/mds/api";
         private static FileLogger logger = FileLogger.Instance;
 
+        public enum FilterType
+        {
+            EntityNameStartWith,
+            EntityNameEndWith,
+            ContainsAttribute
+        }
+
+        /*
         public static Tuple<HttpStatusCode, XmlDocument> callAPI(string url, string method, bool withCredentials, string xml = "")
         {
             logger.Log("API call: " + url + " with method " + method + ". Credentials: " + withCredentials.ToString());
@@ -118,6 +160,14 @@ namespace OutlookVSTOAddIn.Global
             }
             catch (WebException ex)
             {
+                
+                //using (var stream = ex.Response.GetResponseStream())
+                //using (var reader = new StreamReader(stream))
+                //{
+                //    logger.Log(reader.ReadToEnd());
+                //}
+                
+
                 string respText = ex.Message;
                 xmlResponse.LoadXml("<error>" + respText + "</error>");
                 logger.Log("API call failed!");
@@ -152,6 +202,45 @@ namespace OutlookVSTOAddIn.Global
                     }
                 }
             }
+            finally
+            {
+                
+                if (withCredentials)
+                {
+
+
+                    url = UrlFull + "/logout.jsp";
+
+
+                    request = WebRequest.Create(url);
+                    request.UseDefaultCredentials = true;
+                    request.PreAuthenticate = true;
+                    request.Method = method;
+                    request.ContentType = "application/xml";
+                    //request.Credentials = CredentialCache.DefaultCredentials;
+                    request.Credentials = credentials;
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    // Display the status.
+                    logger.Log(response.StatusDescription);
+                    // Get the stream containing content returned by the server.
+                    dataStream = response.GetResponseStream();
+                    // Open the stream using a StreamReader for easy access.
+                    StreamReader reader = new StreamReader(dataStream);
+                    // Read the content.
+                    string responseFromServer = reader.ReadToEnd();
+                    // Display the content.
+                    Console.WriteLine(responseFromServer);
+                    logger.Log(responseFromServer);
+                    // Cleanup the streams and the response.
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
+                }
+                
+            }
+
             return Tuple.Create(httpStatusCode, xmlResponse);
         }
 
@@ -211,6 +300,8 @@ namespace OutlookVSTOAddIn.Global
             }
         }
 
+    */
+
         public static string EscapeExtraChars(string inputString)
         {
             var resultString = "";
@@ -252,7 +343,6 @@ namespace OutlookVSTOAddIn.Global
         }
 
     }
-
 
     public abstract class LogBase
     {

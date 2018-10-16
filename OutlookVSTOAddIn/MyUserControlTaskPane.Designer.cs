@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelDivision = new System.Windows.Forms.Label();
-            this.labelItemType = new System.Windows.Forms.Label();
-            this.comboBoxItemType = new System.Windows.Forms.ComboBox();
-            this.comboBoxDivision = new System.Windows.Forms.ComboBox();
+            this.labelDocumentGroup = new System.Windows.Forms.Label();
+            this.labelDocumentType = new System.Windows.Forms.Label();
+            this.comboBoxDocumentType = new System.Windows.Forms.ComboBox();
+            this.comboBoxDocumentGroup = new System.Windows.Forms.ComboBox();
             this.panelAttributes = new System.Windows.Forms.Panel();
             this.labelAttributes = new System.Windows.Forms.Label();
             this.labelFilter = new System.Windows.Forms.Label();
@@ -39,60 +39,47 @@
             this.labelVersion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // labelDivision
+            // labelDocumentGroup
             // 
-            this.labelDivision.AutoSize = true;
-            this.labelDivision.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelDivision.Location = new System.Drawing.Point(28, 35);
-            this.labelDivision.Name = "labelDivision";
-            this.labelDivision.Size = new System.Drawing.Size(53, 15);
-            this.labelDivision.TabIndex = 0;
-            this.labelDivision.Text = "Division";
+            this.labelDocumentGroup.AutoSize = true;
+            this.labelDocumentGroup.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelDocumentGroup.Location = new System.Drawing.Point(28, 35);
+            this.labelDocumentGroup.Name = "labelDocumentGroup";
+            this.labelDocumentGroup.Size = new System.Drawing.Size(99, 15);
+            this.labelDocumentGroup.TabIndex = 0;
+            this.labelDocumentGroup.Text = "Document Group";
             // 
-            // labelItemType
+            // labelDocumentType
             // 
-            this.labelItemType.AutoSize = true;
-            this.labelItemType.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelItemType.Location = new System.Drawing.Point(28, 94);
-            this.labelItemType.Name = "labelItemType";
-            this.labelItemType.Size = new System.Drawing.Size(58, 15);
-            this.labelItemType.TabIndex = 2;
-            this.labelItemType.Text = "Document Type";
+            this.labelDocumentType.AutoSize = true;
+            this.labelDocumentType.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.labelDocumentType.Location = new System.Drawing.Point(28, 94);
+            this.labelDocumentType.Name = "labelDocumentType";
+            this.labelDocumentType.Size = new System.Drawing.Size(89, 15);
+            this.labelDocumentType.TabIndex = 2;
+            this.labelDocumentType.Text = "Document Type";
             // 
-            // comboBoxItemType
+            // comboBoxDocumentType
             // 
-            this.comboBoxItemType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxItemType.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxItemType.FormattingEnabled = true;
-            this.comboBoxItemType.Location = new System.Drawing.Point(28, 115);
-            this.comboBoxItemType.Name = "comboBoxItemType";
-            this.comboBoxItemType.Size = new System.Drawing.Size(240, 23);
-            this.comboBoxItemType.TabIndex = 5;
-            this.comboBoxItemType.SelectedIndexChanged += new System.EventHandler(this.comboBoxItemType_SelectedIndexChanged);
+            this.comboBoxDocumentType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDocumentType.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxDocumentType.FormattingEnabled = true;
+            this.comboBoxDocumentType.Location = new System.Drawing.Point(28, 115);
+            this.comboBoxDocumentType.Name = "comboBoxDocumentType";
+            this.comboBoxDocumentType.Size = new System.Drawing.Size(240, 23);
+            this.comboBoxDocumentType.TabIndex = 5;
+            this.comboBoxDocumentType.SelectedIndexChanged += new System.EventHandler(this.comboBoxDocumentType_SelectedIndexChanged);
             // 
-            // comboBoxDivision
+            // comboBoxDocumentGroup
             // 
-            this.comboBoxDivision.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxDivision.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxDivision.FormattingEnabled = true;
-            this.comboBoxDivision.Items.AddRange(new object[] {
-            "Merged [EXT]",
-            "101",
-            "201",
-            "202",
-            "299",
-            "301",
-            "601",
-            "602",
-            "603",
-            "606",
-            "607",
-            "608"});
-            this.comboBoxDivision.Location = new System.Drawing.Point(28, 56);
-            this.comboBoxDivision.Name = "comboBoxDivision";
-            this.comboBoxDivision.Size = new System.Drawing.Size(240, 23);
-            this.comboBoxDivision.TabIndex = 6;
-            this.comboBoxDivision.SelectedIndexChanged += new System.EventHandler(this.comboBoxDivision_SelectedIndexChanged);
+            this.comboBoxDocumentGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxDocumentGroup.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxDocumentGroup.FormattingEnabled = true;
+            this.comboBoxDocumentGroup.Location = new System.Drawing.Point(28, 56);
+            this.comboBoxDocumentGroup.Name = "comboBoxDocumentGroup";
+            this.comboBoxDocumentGroup.Size = new System.Drawing.Size(240, 23);
+            this.comboBoxDocumentGroup.TabIndex = 6;
+            this.comboBoxDocumentGroup.SelectedIndexChanged += new System.EventHandler(this.comboBoxDocumentGroup_SelectedIndexChanged);
             // 
             // panelAttributes
             // 
@@ -143,21 +130,21 @@
             this.labelVersion.Size = new System.Drawing.Size(43, 12);
             this.labelVersion.TabIndex = 11;
             this.labelVersion.Text = "V 1.0.0.0";
+            this.labelVersion.DoubleClick += new System.EventHandler(this.labelVersion_DoubleClick);
             // 
             // MyUserControlTaskPane
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.labelVersion);
-            this.Controls.Add(this.comboBoxDivision);
-            this.Controls.Add(this.comboBoxItemType);
+            this.Controls.Add(this.comboBoxDocumentGroup);
+            this.Controls.Add(this.comboBoxDocumentType);
             this.Controls.Add(this.buttonArchive);
             this.Controls.Add(this.labelFilter);
             this.Controls.Add(this.labelAttributes);
             this.Controls.Add(this.panelAttributes);
-            this.Controls.Add(this.labelItemType);
-            this.Controls.Add(this.labelDivision);
-            this.Enabled = false;
+            this.Controls.Add(this.labelDocumentType);
+            this.Controls.Add(this.labelDocumentGroup);
             this.MinimumSize = new System.Drawing.Size(295, 2);
             this.Name = "MyUserControlTaskPane";
             this.Size = new System.Drawing.Size(300, 620);
@@ -170,10 +157,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelDivision;
-        private System.Windows.Forms.Label labelItemType;
-        private System.Windows.Forms.ComboBox comboBoxItemType;
-        private System.Windows.Forms.ComboBox comboBoxDivision;
+        private System.Windows.Forms.Label labelDocumentGroup;
+        private System.Windows.Forms.Label labelDocumentType;
+        private System.Windows.Forms.ComboBox comboBoxDocumentType;
+        private System.Windows.Forms.ComboBox comboBoxDocumentGroup;
         private System.Windows.Forms.Panel panelAttributes;
         private System.Windows.Forms.Label labelAttributes;
         private System.Windows.Forms.Label labelFilter;

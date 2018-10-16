@@ -59,6 +59,10 @@ namespace OutlookVSTOAddIn
             get {
                 return userName;
             }
+
+            set {
+                userName = value;
+            }
         }
 
         public string Password
@@ -79,6 +83,15 @@ namespace OutlookVSTOAddIn
             if (e.KeyCode == Keys.Escape)
             {
                 buttonCancel.PerformClick();
+            }
+        }
+
+        private void LogInForm_Load(object sender, EventArgs e)
+        {
+            if (userName != "")
+            {
+                this.textBoxUserName.Text = userName;
+                this.ActiveControl = this.textBoxPassword;
             }
         }
     }

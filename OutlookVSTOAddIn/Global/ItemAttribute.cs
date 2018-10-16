@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OutlookVSTOAddIn.Global
 {
+    /*
     public partial class ItemAttribute
     {
         private string name;
@@ -89,4 +90,5 @@ namespace OutlookVSTOAddIn.Global
         }
         #endregion
     }
+    */
 }

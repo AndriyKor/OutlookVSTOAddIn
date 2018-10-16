@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace OutlookVSTOAddIn.Global
 {
-    
+    /*
     public partial class ItemTypes
     {
         private static ItemTypes instance;
@@ -140,6 +140,7 @@ namespace OutlookVSTOAddIn.Global
             return result;
         }
 
+        
         public ItemType GetSingeItem(string name)
         {
             ItemType result = null;
@@ -155,7 +156,9 @@ namespace OutlookVSTOAddIn.Global
 
             return result;
         }
+        
 
+        
         public bool Force()
         {
             var url = Common.UrlFull + "/getEntities.jsp";
@@ -183,6 +186,8 @@ namespace OutlookVSTOAddIn.Global
 
             return result;
         }
+        
 
     }
+*/
 }
