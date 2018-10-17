@@ -369,9 +369,7 @@ namespace OutlookVSTOAddIn.Global
 
                 // Update client header
                 var authenticationBytes = Encoding.ASCII.GetBytes(userCredentials.UserName + ":" + userCredentials.Password);
-                //var authenticationBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(userCredentials.UserName + ":" + userCredentials.Password);
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(authenticationBytes));
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "YWsxOl91NSZJIigycjcwMmthczc=");
             }
         }
 
@@ -391,12 +389,8 @@ namespace OutlookVSTOAddIn.Global
 
             client = new HttpClient(httpClientHandler)
             {
-                // TST
-                //BaseAddress = new Uri("http://m3v10.victaulic.com:21105/")
-                BaseAddress = new Uri(CustomConfigurationManager.CustomConfigurationManager.GetBaseUrl("TST"))
-
-                // PRD
-                //BaseAddress = new Uri("http://m310BEP.victaulic.com:20105/")
+                //BaseAddress = new Uri(CustomConfigurationManager.CustomConfigurationManager.GetBaseUrl("TST"))
+                BaseAddress = new Uri(CustomConfigurationManager.CustomConfigurationManager.GetBaseUrl())
             };
 
 
@@ -441,6 +435,7 @@ namespace OutlookVSTOAddIn.Global
             {
                 rootObject = await response.Content.ReadAsAsync<RootObjectEntities>();
             }
+
             return Tuple.Create(rootObject, response.StatusCode);
         }
 

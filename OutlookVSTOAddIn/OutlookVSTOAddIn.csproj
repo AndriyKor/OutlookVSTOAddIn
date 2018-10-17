@@ -213,9 +213,6 @@
     <Compile Include="Global\CustomConfigurationManager\DocumentGroupsConfigElement.cs" />
     <Compile Include="Global\DocumentTypeManager.cs" />
     <Compile Include="Global\IDMToolsAsync.cs" />
-    <Compile Include="Global\ItemAttribute.cs" />
-    <Compile Include="Global\ItemType.cs" />
-    <Compile Include="Global\ItemTypes.cs" />
     <Compile Include="LogInForm.cs">
       <SubType>Form</SubType>
     </Compile>

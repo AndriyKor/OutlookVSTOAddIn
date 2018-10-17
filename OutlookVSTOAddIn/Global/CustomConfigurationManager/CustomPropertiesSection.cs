@@ -62,13 +62,11 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
         protected override void DeserializeSection(System.Xml.XmlReader reader)
         {
             base.DeserializeSection(reader);
-            // You can add custom processing code here.
         }
 
         protected override string SerializeSection(ConfigurationElement parentElement, string name, ConfigurationSaveMode saveMode)
         {
             string s = base.SerializeSection(parentElement, name, saveMode);
-            // You can add custom processing code here.
             return s;
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -10,26 +11,52 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
 {
     class CustomConfigurationManager
     {
+        private static FileLogger logger = FileLogger.Instance;
+
+        private static Configuration config;
+
+        private static Configuration configuration
+        {
+            get
+            {
+                if (config == null)
+                {
+                    //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                    string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                    UriBuilder uri = new UriBuilder(codeBase);
+                    string path = Uri.UnescapeDataString(uri.Path);
+
+                    config = ConfigurationManager.OpenExeConfiguration(path);
+                }
+                
+                return config;
+            }
+        }
+
+        /*
+        // Issue with saving config file
+        // Reason: access denied
+        // To be fixed in next build
+        // Using: Login Form 
         public static string DefaultUser
         {
             get
             {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                CustomPropertiesSection myCustomPropertiesSection = config.GetSection("customProperties") as CustomPropertiesSection;
+                CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
 
                 return myCustomPropertiesSection.DefaultUser.Value;
             }
 
             set
             {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                CustomPropertiesSection myCustomPropertiesSection = config.GetSection("customProperties") as CustomPropertiesSection;
+                CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
 
                 myCustomPropertiesSection.DefaultUser.Value = value;
 
                 config.Save();
             }
         }
+        */
 
         public static string GetBaseUrl(string envName)
         {
@@ -37,12 +64,11 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
 
             try
             {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                CustomPropertiesSection myCustomPropertiesSection = config.GetSection("customProperties") as CustomPropertiesSection;
+                CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
 
                 if (myCustomPropertiesSection == null)
                 {
-                    //Console.WriteLine("Failed to load UrlsSection.");
+                    logger.Log("Failed to load UrlsSection.");
                 }
                 else
                 {
@@ -58,8 +84,21 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             }
             catch (Exception ex)
             {
-                // Write to log
+                logger.Log(ex.Message);
             }
+
+            return result;
+        }
+
+        public static string GetBaseUrl()
+        {
+            string result = "";
+
+            // get default BaseUrlName
+            string baseUrlName = GetDefaultBaseUrlName();
+
+            // get BaseUrl
+            result = GetBaseUrl(baseUrlName);
 
             return result;
         }
@@ -70,14 +109,14 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
 
             try
             {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
                 // Get the MyUrls section.
-                CustomPropertiesSection myCustomPropertiesSection = config.GetSection("customProperties") as CustomPropertiesSection;
+                CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
+                //CustomPropertiesSection myCustomPropertiesSection = ConfigurationManager. as CustomPropertiesSection;
 
                 if (myCustomPropertiesSection == null)
                 {
-                    //Console.WriteLine("Failed to load UrlsSection.");
+                    logger.Log("Failed to load UrlsSection.");
                 }
                 else
                 {
@@ -90,7 +129,7 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             catch (Exception ex)
             {
                 MessageBox.Show("Error reading configuration file. Reason: " + ex.Message, "IDM Tools", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // Write to log
+                logger.Log(ex.Message);
             }
             finally
             {
@@ -109,14 +148,31 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
 
             try
             {
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                CustomPropertiesSection myCustomPropertiesSection = config.GetSection("customProperties") as CustomPropertiesSection;
+                CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
 
                 result = myCustomPropertiesSection.DocumentGroups.Default;
             }
             catch (Exception ex)
             {
-                // Write to log
+                logger.Log(ex.Message);
+            }
+
+            return result;
+        }
+
+        public static string GetDefaultBaseUrlName()
+        {
+            string result = "";
+
+            try
+            {
+                CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
+
+                result = myCustomPropertiesSection.Urls.Default;
+            }
+            catch (Exception ex)
+            {
+                logger.Log(ex.Message);
             }
 
             return result;

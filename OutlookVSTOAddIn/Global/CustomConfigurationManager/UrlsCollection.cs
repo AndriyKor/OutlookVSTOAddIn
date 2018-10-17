@@ -70,6 +70,15 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             get { return base.Count; }
         }
 
+        [ConfigurationProperty("default", IsRequired = true)]
+        public string Default
+        {
+            get
+            {
+                return (string)base["default"];
+            }
+        }
+
         public UrlConfigElement this[int index]
         {
             get

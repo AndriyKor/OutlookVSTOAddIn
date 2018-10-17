@@ -11,7 +11,7 @@ using System.Security;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Victaulic")]
 [assembly: AssemblyProduct("OutlookVSTOAddIn")]
-[assembly: AssemblyCopyright("Copyright ©Victaulic 2017")]
+[assembly: AssemblyCopyright("Copyright ©Victaulic 2017-2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

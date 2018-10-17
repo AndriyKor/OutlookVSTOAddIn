@@ -128,7 +128,7 @@ namespace OutlookVSTOAddIn.Global
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // handle Exception here
                 throw;

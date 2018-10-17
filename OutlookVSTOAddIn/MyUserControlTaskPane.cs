@@ -22,7 +22,6 @@ namespace OutlookVSTOAddIn
             InitializeComponent();
 
             // Lunch task to retrieve entities
-            //Task.Run(DocumentTypeManager.Instance.RetrieveEntities);
             Task.Run(() => DocumentTypeManager.Instance.RetrieveEntities());
 
             this.Load += MyUserControlTaskPane_Load;
@@ -46,8 +45,6 @@ namespace OutlookVSTOAddIn
                     break;
                 }
             }
-            
-            //comboBoxDocumentGroup.SelectedIndex = 0;
 
             var productVersion = Assembly.GetExecutingAssembly().GetName().Version;
             labelVersion.Text = "V" + productVersion;
@@ -64,43 +61,6 @@ namespace OutlookVSTOAddIn
 
         private void comboBoxDocumentGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // test
-            // var testConfig = CustomConfigurationManager.DefaultUser;
-
-            // CustomConfigurationManager.DefaultUser = "123";
-
-            // var testConfig2 = CustomConfigurationManager.DefaultUser;
-            //var ttt = testConfig;
-
-            // List<Entity> tmp = DocumentTypeManager.Instance.GetEntites("M3_CUNO", Common.FilterType.ContainsAttribute);
-            //var tmp = DocumentTypeManager.Instance.GetSingleEntityByName("MDS_File");
-            //var tmp2 = "";
-
-            // end test
-
-            /*
-            if (ItemTypes.Instance.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                List<ItemType> itemTypes = ItemTypes.Instance.Get(division);
-
-                comboBoxItemType.Items.Clear();
-
-                if (itemTypes.Count != 0)
-                {
-                    foreach (ItemType item in itemTypes)
-                    {
-                        if (item.Name != null)
-                        {
-                            comboBoxItemType.Items.Add(item.Name);
-                        }
-                    }
-
-                    comboBoxItemType.SelectedIndex = 0;
-
-                }
-            }
-            */
-
             Dictionary<string, string> emptyDictionary = new Dictionary<string, string>();
             emptyDictionary.Add("NO_DOCUMENT_TYPES_FOUND", "No Document Types Fround");
             comboBoxDocumentType.DataSource = new BindingSource(emptyDictionary, null);
@@ -140,9 +100,6 @@ namespace OutlookVSTOAddIn
                 comboBoxDocumentType.DataSource = new BindingSource(documentTypeList, null);
             }
 
-            // Set default document type
-            // Get value from Configuration file
-            //string defaultDocumentGroupKey = CustomSection.
         }
 
         private void comboBoxDocumentType_SelectedIndexChanged(object sender, EventArgs e)
@@ -189,7 +146,6 @@ namespace OutlookVSTOAddIn
                     case "8":
                     case "9":
                         dateTimePicker = new DateTimePicker();
-                        //dateTimePicker.Name = "dateTimePicker_" + attr.name;
                         dateTimePicker.Name = "attributeControl_" + attr.name;
                         dateTimePicker.Top = step * (counter++);
                         dateTimePicker.Left = 29;
@@ -232,7 +188,6 @@ namespace OutlookVSTOAddIn
                         if (attr.valueset != null && attr.valueset.value.Count > 0)
                         {
                             comboBox = new ComboBox(); ;
-                            //comboBox.Name = "comboBox_" + attr.name;
                             comboBox.Name = "attributeControl_" + attr.name;
                             comboBox.Top = step * (counter++);
                             comboBox.Left = 29;
@@ -262,7 +217,6 @@ namespace OutlookVSTOAddIn
                         else
                         {
                             textBox = new TextBox();
-                            //textBox.Name = "textbox_" + attr.name;
                             textBox.Name = "attributeControl_" + attr.name;
                             textBox.Top = step * (counter++);
                             textBox.Left = 29;
@@ -310,149 +264,6 @@ namespace OutlookVSTOAddIn
 
                 panelAttributes.Controls.Add(labelError);
             }
-
-            /*
-            string selectedItem = comboBoxItemType.Text;
-
-            
-            ItemType item = ItemTypes.Instance.GetSingeItem(selectedItem);
-
-            if (item != null)
-            {
-                int step = 23;
-                int counter = -1;
-                foreach (ItemAttribute attr in item.Attrs)
-                {
-                    counter++;
-
-                    Label label = new Label();
-                    TextBox textBox;
-                    DateTimePicker dateTimePicker;
-                    ComboBox comboBox;
-
-                    label.Text = attr.Desc;
-                    label.Name = "label_" + attr.Name;
-                    label.Top = step * (counter++);
-                    label.Left = 29;
-                    label.AutoSize = true;
-                    label.Font = new Font("Calibri", (float)9.75);
-                    label.Height = 17;
-
-                    // add required flag
-                    if (attr.Flag == "10" || attr.Flag == "26")
-                    {
-                        label.Text += " *";
-                    }
-
-                    panelAttributes.Controls.Add(label);
-
-                    if (attr.Type == "7")
-                    {
-                        dateTimePicker = new DateTimePicker();
-                        dateTimePicker.Name = "dateTimePicker_" + attr.Name;
-                        dateTimePicker.Top = step * (counter++);
-                        dateTimePicker.Left = 29;
-                        dateTimePicker.Font = new Font("Calibri", (float)9.75);
-                        dateTimePicker.Width = 240;
-                        dateTimePicker.Value = DateTime.Today;
-
-                        panelAttributes.Controls.Add(dateTimePicker);
-                        dateTimePicker.BringToFront();
-                    }
-                    else if(attr.Name == "M3_DIVI")
-                    {
-                        comboBox = new ComboBox(); ;
-                        comboBox.Name = "comboBox_" + attr.Name;
-                        comboBox.Top = step * (counter++);
-                        comboBox.Left = 29;
-                        comboBox.Font = new Font("Calibri", (float)9.75);
-                        comboBox.Width = 240;
-                        comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-
-                        comboBox.Items.AddRange(new object[] {
-                            "101",
-                            "201",
-                            "202",
-                            "299",
-                            "301",
-                            "601",
-                            "602",
-                            "603",
-                            "606",
-                            "607",
-                            "608" });
-
-                        comboBox.SelectedIndex = 0;
-
-                        if (!item.Name.StartsWith("M3_EXT_"))
-                        {
-                            comboBox.Text = comboBoxDivision.Text;
-                            comboBox.Enabled = false;
-                        }
-
-                        panelAttributes.Controls.Add(comboBox);
-                        comboBox.BringToFront();
-
-                    }
-                    else
-                    {
-                        textBox = new TextBox();
-                        textBox.Name = "textbox_" + attr.Name;
-                        textBox.Top = step * (counter++);
-                        textBox.Left = 29;
-                        textBox.Font = new Font("Calibri", (float)9.75);
-                        textBox.Width = 240;
-                        textBox.MaxLength = Convert.ToInt32(attr.Size);
-                        textBox.AllowDrop = true;
-                        textBox.DragEnter += TextBox_DragEnter;
-                        textBox.DragDrop += TextBox_DragDrop;
-
-                        // add event for validation
-                        textBox.TextChanged += TextBox_TextChanged;
-
-                        panelAttributes.Controls.Add(textBox);
-                        textBox.BringToFront();
-                    }
-
-                    Label labelError = new Label();
-                    labelError.Text = "";
-                    labelError.Name = "label_error_" + attr.Name;
-                    labelError.Top = step * (counter) + 2;
-                    labelError.Left = 29;
-                    labelError.AutoSize = true;
-                    labelError.Font = new Font("Calibri", (float)8.75);
-                    labelError.ForeColor = Color.Red;
-                    labelError.Height = 17;
-                    labelError.Visible = false;
-
-                    panelAttributes.Controls.Add(labelError);
-
-                }
-
-                Label label_required = new Label();
-                label_required.Text = "* Required fields";
-                label_required.Name = "label_required";
-                label_required.Top = step * (counter + 1);
-                label_required.Left = 29;
-                label_required.AutoSize = true;
-                label_required.Font = new Font("Calibri", (float)9.75);
-                label_required.Height = 15;
-
-                panelAttributes.Controls.Add(label_required);
-
-                // env check
-                if (Common.UrlFull.Contains("20105"))
-                {
-                    buttonArchive.Text = "Archive";
-                }
-                else
-                {
-                    buttonArchive.Text = "Archive (TST)";
-                }
-
-            }
-            */
-
         }
 
         private bool validateData()
@@ -567,59 +378,6 @@ namespace OutlookVSTOAddIn
 
             }
 
-            /*
-            ItemType itemType = ItemTypes.Instance.GetSingeItem(comboBoxDocumentType.Text);
-            bool result = true;
-
-            foreach (Control control in panelAttributes.Controls)
-            {
-                if (control.GetType() == typeof(TextBox))
-                {
-                    string attributeName = control.Name.Replace("textbox_", "");
-                    ItemAttribute attribute = null;
-
-                    // get attribute 
-                    foreach (ItemAttribute attr in itemType.Attrs)
-                    {
-                        string name = attr.Name;
-
-                        if (attributeName == name)
-                        {
-                            attribute = attr;
-                            break;
-                        }
-                    }
-
-                    // validate
-                    if (attribute != null)
-                    {
-                        string flag = attribute.Flag;
-                        string text = control.Text;
-
-                        Label labelError = (Label)panelAttributes.Controls.Find("label_error_" + attribute.Name, false)[0];
-                        labelError.Text = "";
-                        labelError.Visible = false;
-
-                        if (flag == "10" || flag == "26")
-                        {
-                            if (text == "")
-                            {
-                                control.BackColor = Color.LightYellow;
-                                labelError.Text = "Field is required!";
-                                labelError.Visible = true;
-                                result = false;
-                            }
-                        }
-                    }
-                }
-
-                if (control.GetType() == typeof(DateTimePicker))
-                {
-                    // no checks for DateTimePicker
-                }
-            }
-
-            */
             return result;
         }
 
@@ -680,23 +438,18 @@ namespace OutlookVSTOAddIn
                     if (DocumentTypeManager.CreateItemAPICallStatus == HttpStatusCode.OK)
                     {
                         MessageBox.Show("Document successfuly archived!", "IDM Tools - Victaulic", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        logger.Log("Item " + fileName + " has been successfully added!");
                     }
                     else
                     {
                         MessageBox.Show("Document was not archived. Reason: " + DocumentTypeManager.CreateItemAPICallStatus.ToString(), "IDM Tools - Victaulic", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         MessageBox.Show(DocumentTypeManager.CreateItemAPICallResponceError.message);
+                        logger.Log(DocumentTypeManager.CreateItemAPICallResponceError.code + ":" + DocumentTypeManager.CreateItemAPICallResponceError.message);
+                        logger.Log(DocumentTypeManager.CreateItemAPICallResponceError.detail);
                     }
                 }
 
                 #endregion
-
-
-                // add email to IDM
-                //ItemType item = ItemTypes.Instance.GetSingeItem(comboBoxItemType.Text);
-                //addItem(item, base64, fileName);
-
-                //this.Enabled = true;
-                
 
             }
         }
@@ -770,42 +523,6 @@ namespace OutlookVSTOAddIn
                     // Do nothing
                 }
 
-                /*
-                switch (attribute.type)
-                {
-                    case "7":
-                        dateTimePicker = (DateTimePicker)panelAttributes.Controls.Find("dateTimePicker_" + attribute.name, false)[0];
-                        // value = dateTimePicker.Value.Year + "-" + dateTimePicker.Value.Month + "-" + dateTimePicker.Value.Day;
-                        value = dateTimePicker.Value.ToString("yyyy-MM-dd");
-
-                        break;
-                    case "8":
-                        dateTimePicker = (DateTimePicker)panelAttributes.Controls.Find("dateTimePicker_" + attribute.name, false)[0];
-                        // value = dateTimePicker.Value.Year + "-" + dateTimePicker.Value.Month + "-" + dateTimePicker.Value.Day;
-                        value = dateTimePicker.Value.ToString("HH:mm:ss");
-
-                        break;
-                    case "9":
-                        dateTimePicker = (DateTimePicker)panelAttributes.Controls.Find("dateTimePicker_" + attribute.name, false)[0];
-                        // value = dateTimePicker.Value.Year + "-" + dateTimePicker.Value.Month + "-" + dateTimePicker.Value.Day;
-                        value = dateTimePicker.Value.ToString("yyyy-MM-dd HH:mm:ss");
-
-                        break;
-                    default:
-                        if (attribute.name == "M3_DIVI")
-                        {
-                            value = ((Control)panelAttributes.Controls.Find("comboBox_" + attribute.name, false)[0]).Text;
-                        }
-                        else
-                        {
-                            value = ((Control)panelAttributes.Controls.Find("textbox_" + attribute.name, false)[0]).Text;
-                        }
-
-                        value = Common.EscapeExtraChars(value);
-
-                        break;
-                }
-                */
                 attrs.attr.Add(new Attr(attribute.name, value));
 
             }
@@ -831,14 +548,14 @@ namespace OutlookVSTOAddIn
             {
                 LogInForm loginForm = new LogInForm();
                 loginForm.StartPosition = FormStartPosition.CenterParent;
-                loginForm.UserName = CustomConfigurationManager.DefaultUser;
+                //loginForm.UserName = CustomConfigurationManager.DefaultUser;
 
                 if (loginForm.ShowDialog() == DialogResult.OK)
                 {
                     string user = loginForm.UserName;
                     string password = loginForm.Password;
 
-                    CustomConfigurationManager.DefaultUser = user;
+                    //CustomConfigurationManager.DefaultUser = user;
 
                     DocumentTypeManager.Instance.UserCredentials = new NetworkCredential(user, password);
 
@@ -850,12 +567,12 @@ namespace OutlookVSTOAddIn
                         Common.IsCredentialCorrect = true;
                         result = true;
                         Task.Run(DocumentTypeManager.Instance.Logout).Wait();
-                        //Task.Run(DocumentTypeManager.Instance.Logout).ConfigureAwait(false);
                     }
                     else
                     {
                         // Login is NOT successfull. Show error message
                         MessageBox.Show("Login failed! Reason: " + DocumentTypeManager.LoginAPICallStatus.ToString(), "Authorization error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        logger.Log("Login failed! Reason: " + DocumentTypeManager.LoginAPICallStatus.ToString());
                     }
                 }
             }
@@ -868,152 +585,6 @@ namespace OutlookVSTOAddIn
         }
 
         #endregion
-
-        /*
-        private bool addItem(ItemType item, string base64, string fileName)
-        {
-            logger.Log("Trying to add document with name " + fileName);
-
-            bool result = true;
-            var url = Common.UrlFull + "/addItemEx.jsp";
-            string xml = getRequestXML(item, base64, fileName);
-            logger.Log("xml: " + xml.Replace(base64, "base64 string was removed"));
-
-            Tuple<HttpStatusCode, XmlDocument> response = Common.callAPI(url, "POST", true, xml);
-
-            if (response.Item1 == HttpStatusCode.OK)
-            {
-                logger.Log("Item " + fileName + " has been successfully added!");
-                // check in
-                XmlDocument respXml = new XmlDocument();
-                respXml = response.Item2;
-
-                string pid = respXml.SelectSingleNode("/item/pid").ChildNodes[0].InnerText;
-                result = checkInItem(pid);
-            }
-            else
-            {
-                result = false;
-                MessageBox.Show(this.Parent, "Error while adding document to IDM. Reason: " + response.Item1, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
-            }
-
-            return result;
-        }
-
-        private bool checkInItem(string pid)
-        {
-            logger.Log("Trying to check in item with pid: " + pid);
-
-            bool result = true;
-            string xml = "<item><pid>" + pid + "</pid></item>";
-            var url = Common.UrlFull + "/checkInItem.jsp";
-
-            Tuple<HttpStatusCode, XmlDocument> response = Common.callAPI(url, "POST", true, xml);
-
-            if (response.Item1 == HttpStatusCode.OK)
-            {
-                logger.Log("Item has been successfully checked in!");
-                logger.Log("-----------------------------------------------------------");
-                MessageBox.Show(this, "Email was successfully archived!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                result = false;
-                MessageBox.Show(this, "Error while checking in document in IDM. Reason: " + response.Item1.ToString(), "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            return result;
-        }
-
-        private string getRequestXML(ItemType item, string base64, string fileName)
-        {
-            string xml;
-
-            // main tag
-            xml = "<item>";
-
-            // header (name only)
-            // 
-            // <entityName>M3_RMA_101</entityName>
-            xml += "<entityName>" + item.Name + "</entityName>";
-
-            // attribute list
-            // 
-            // <attrs>
-            //     <attr>
-            //         <name>M3_EXT_DocumentReference</name>
-            //         <type>2</type>
-            //         <qual>M3_EXT_DocumentReference</qual>
-            //         <value>21342356</value>
-            //     </attr>
-            //     ...
-            // </attrs>
-            xml += "<attrs>";
-
-            List<ItemAttribute> attributeList = item.Attrs;
-            foreach (ItemAttribute itemAttribute in attributeList)
-            {
-                string value = "";
-
-                if (itemAttribute.Type == "2")
-                {
-                    if (itemAttribute.Name == "M3_DIVI")
-                    {
-                        value = ((Control)panelAttributes.Controls.Find("comboBox_" + itemAttribute.Name, false)[0]).Text;
-                    }
-                    else
-                    {
-                        value = ((Control)panelAttributes.Controls.Find("textbox_" + itemAttribute.Name, false)[0]).Text;
-
-                    }
-
-                    value = Common.EscapeExtraChars(value);
-                }
-
-                if (itemAttribute.Type == "7")
-                {
-                    DateTimePicker dateTimePicker = (DateTimePicker)panelAttributes.Controls.Find("dateTimePicker_" + itemAttribute.Name, false)[0];
-                    // value = dateTimePicker.Value.Year + "-" + dateTimePicker.Value.Month + "-" + dateTimePicker.Value.Day;
-                    value = dateTimePicker.Value.ToString("yyyy-MM-dd");
-                }
-
-                var attrTag = "<attr>";
-                attrTag += "<name>" + itemAttribute.Name + "</name>";
-                attrTag += "<type>" + itemAttribute.Type + "</type>";
-                attrTag += "<qual>" + itemAttribute.Qual + "</qual>";
-                attrTag += "<value>" + value + "</value>";
-                attrTag += "</attr>";
-
-                xml += attrTag;
-            }
-            xml += "</attrs>";
-
-            // resourse list
-            //
-            // <resrs>
-            //     <res>
-            //         <entityName>ICMBASE</entityName>
-            //         <mimetype>application/vnd.ms-outlook</mimetype>
-            //         <base64>file-to-BASE64-string</base64>
-            //         <filename>20163602-043645-Ticket.msg</filename>
-            //     </res>
-            // </resrs>
-            xml += "<resrs>";
-            xml += "<res>";
-            xml += "<entityName>ICMBASE</entityName>";
-            xml += "<mimetype>application/vnd.ms-outlook</mimetype>";
-            xml += "<base64>" + base64 + "</base64>";
-            xml += "<filename>" + fileName + "</filename>";
-            xml += "</res>";
-            xml += "</resrs>";
-
-            // add closed main tag
-            xml += "</item>";
-
-            return xml;
-        }
-        */
 
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
