@@ -15,14 +15,36 @@ namespace OutlookVSTOAddIn
 
         }
 
-        private void toggleButtonShowTaskPane_Click(object sender, RibbonControlEventArgs e)
+        private void toggleButton_Click(object sender, RibbonControlEventArgs e)
         {
             Outlook.Inspector inspector = (Outlook.Inspector)e.Control.Context;
             InspectorWrapper inspectorWrapper = Globals.ThisAddIn.InspectorWrappers[inspector];
             CustomTaskPane taskPane = inspectorWrapper.CustomTaskPane;
-            if (taskPane != null)
+            CustomTaskPane taskPaneSettings = inspectorWrapper.CustomTaskPaneSettings;
+
+            if (((RibbonToggleButton)sender).Name == "toggleButtonShowTaskPane")
             {
-                taskPane.Visible = ((RibbonToggleButton)sender).Checked;
+                if (taskPaneSettings != null)
+                {
+                    taskPaneSettings.Visible = false;
+                }
+
+                if (taskPane != null)
+                {
+                    taskPane.Visible = ((RibbonToggleButton)sender).Checked;
+                }
+            }
+            else if (((RibbonToggleButton)sender).Name == "toggleButtonSettings")
+            {
+                if (taskPane != null)
+                {
+                    taskPane.Visible = false;
+                }
+
+                if (taskPaneSettings != null)
+                {
+                    taskPaneSettings.Visible = ((RibbonToggleButton)sender).Checked;
+                }
             }
         }
     }

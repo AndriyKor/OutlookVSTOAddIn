@@ -25,6 +25,11 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             {
                 return (string)base["default"];
             }
+
+            set
+            {
+                base["default"] = value;
+            }
         }
 
         protected override ConfigurationElement CreateNewElement()

@@ -100,6 +100,19 @@ namespace OutlookVSTOAddIn
                 comboBoxDocumentType.DataSource = new BindingSource(documentTypeList, null);
             }
 
+            // Disable/Enable "Archive" button, based on selected Document Type
+            string selectedDocumentTypeKey = ((KeyValuePair<string, string>)comboBoxDocumentType.SelectedItem).Key;
+            if (selectedDocumentTypeKey == "NO_DOCUMENT_TYPES_FOUND")
+            {
+                buttonArchive.Enabled = false;
+            }
+            else
+            {
+                buttonArchive.Enabled = true;
+            }
+
+
+
         }
 
         private void comboBoxDocumentType_SelectedIndexChanged(object sender, EventArgs e)

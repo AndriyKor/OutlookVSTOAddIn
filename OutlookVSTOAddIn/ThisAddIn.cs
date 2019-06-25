@@ -10,6 +10,7 @@ using Microsoft.Office.Tools;
 using System.Net;
 using System.IO;
 using System.Security.Cryptography;
+using OutlookVSTOAddIn.Global.CustomConfigurationManager;
 
 namespace OutlookVSTOAddIn
 {
@@ -80,6 +81,7 @@ namespace OutlookVSTOAddIn
     {
         private Outlook.Inspector inspector;
         private CustomTaskPane taskPane;
+        private CustomTaskPane taskPaneSettings;
 
         public InspectorWrapper(Outlook.Inspector Inspector)
         {
@@ -87,21 +89,39 @@ namespace OutlookVSTOAddIn
             ((Outlook.InspectorEvents_Event)inspector).Close +=
                 new Outlook.InspectorEvents_CloseEventHandler(InspectorWrapper_Close);
 
+            // Main Task Pane
             taskPane = Globals.ThisAddIn.CustomTaskPanes.Add(
                 new MyUserControlTaskPane(), "Archive Email", inspector);
+
             taskPane.VisibleChanged += new EventHandler(TaskPane_VisibleChanged);
+
+            // Settings Task Pane
+            taskPaneSettings = Globals.ThisAddIn.CustomTaskPanes.Add(
+                new SettingsPane(), "Settings", inspector);
+
+            taskPaneSettings.VisibleChanged += new EventHandler(TaskPaneSettings_VisibleChanged);
 
             // Add properties
             taskPane.Width = 320;
             taskPane.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
             taskPane.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
-            
+
+            taskPaneSettings.Width = 320;
+            taskPaneSettings.DockPositionRestrict = Office.MsoCTPDockPositionRestrict.msoCTPDockPositionRestrictNoChange;
+            taskPaneSettings.DockPosition = Office.MsoCTPDockPosition.msoCTPDockPositionRight;
         }
 
         void TaskPane_VisibleChanged(object sender, EventArgs e)
         {
+
             Globals.Ribbons[inspector].ManageTaskPaneRibbon.toggleButtonShowTaskPane.Checked =
                 taskPane.Visible;
+        }
+
+        void TaskPaneSettings_VisibleChanged(object sender, EventArgs e)
+        {
+            Globals.Ribbons[inspector].ManageTaskPaneRibbon.toggleButtonSettings.Checked =
+                taskPaneSettings.Visible;
         }
 
         void InspectorWrapper_Close()
@@ -111,7 +131,14 @@ namespace OutlookVSTOAddIn
                 Globals.ThisAddIn.CustomTaskPanes.Remove(taskPane);
             }
 
+            if (taskPaneSettings != null)
+            {
+                Globals.ThisAddIn.CustomTaskPanes.Remove(taskPaneSettings);
+            }
+
             taskPane = null;
+            taskPaneSettings = null;
+
             Globals.ThisAddIn.InspectorWrappers.Remove(inspector);
             ((Outlook.InspectorEvents_Event)inspector).Close -=
                 new Outlook.InspectorEvents_CloseEventHandler(InspectorWrapper_Close);
@@ -123,6 +150,14 @@ namespace OutlookVSTOAddIn
             get
             {
                 return taskPane;
+            }
+        }
+
+        public CustomTaskPane CustomTaskPaneSettings
+        {
+            get
+            {
+                return taskPaneSettings;
             }
         }
     }

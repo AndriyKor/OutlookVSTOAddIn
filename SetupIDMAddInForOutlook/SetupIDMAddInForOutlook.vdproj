@@ -3080,15 +3080,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:IDM Add-in for Outlook"
-        "ProductCode" = "8:{0994DD7D-4E2E-4219-8E70-F32794DDD2F3}"
-        "PackageCode" = "8:{452BD933-653B-4DE6-B29E-80F5A1BB074C}"
+        "ProductCode" = "8:{306D0E02-8480-4E72-9935-185E2B084201}"
+        "PackageCode" = "8:{B7D1A66B-1B4C-4FE4-92F3-D3AFB9B3A341}"
         "UpgradeCode" = "8:{B7095693-6213-4689-8D97-11B2551F3273}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.22"
+        "ProductVersion" = "8:1.0.25"
         "Manufacturer" = "8:Victaulic"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -3690,7 +3690,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_F8C9ADC9AC8E40F89D0306AF830976A5"
             {
-            "SourcePath" = "8:..\\OutlookVSTOAddIn\\obj\\Debug\\OutlookVSTOAddIn.dll"
+            "SourcePath" = "8:..\\OutlookVSTOAddIn\\obj\\Release\\OutlookVSTOAddIn.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3A07036763574BA6A1D1A2FE1A624F98"

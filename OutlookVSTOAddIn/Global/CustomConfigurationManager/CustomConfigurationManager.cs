@@ -21,14 +21,45 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             {
                 if (config == null)
                 {
+                    
                     //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                     string codeBase = Assembly.GetExecutingAssembly().CodeBase;
                     UriBuilder uri = new UriBuilder(codeBase);
                     string path = Uri.UnescapeDataString(uri.Path);
 
                     config = ConfigurationManager.OpenExeConfiguration(path);
+
+                    // - - - 
+
+                    string cfgLocation = Assembly.GetExecutingAssembly().Location.Replace(Assembly.GetExecutingAssembly().ManifestModule.Name, "");
+                    config.SaveAs(cfgLocation + "IDM_Plugin_Outlook.config");
+
+                    // - - - 
+
+
+
+                    /*
+                    string location = Assembly.GetExecutingAssembly().Location;
+                    string moduleName = Assembly.GetExecutingAssembly().ManifestModule.Name;
+                    string cfgLocation = "";
+
+                    // Is it OK? Does 'location' always contains 'moduleName'? Let's assume - YES
+                    if (location.EndsWith(moduleName))
+                    {
+                        cfgLocation = location.Replace(moduleName, "");
+                    }
+                    else
+                    {
+                        cfgLocation = location;
+                    }
+                    
+                    //config.SaveAs(cfgLocation + @"cfg_default.xml", ConfigurationSaveMode.Modified);
+
+                    config = ConfigurationManager.OpenExeConfiguration(cfgLocation + "configuration.xml");
+                    //Configuration tmp = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+                    */
                 }
-                
+
                 return config;
             }
         }
@@ -58,7 +89,7 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
         }
         */
 
-        public static string GetBaseUrl(string envName)
+        internal static string GetBaseUrl(string envName)
         {
             string result = "";
 
@@ -90,7 +121,7 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             return result;
         }
 
-        public static string GetBaseUrl()
+        internal static string GetBaseUrl()
         {
             string result = "";
 
@@ -103,7 +134,44 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             return result;
         }
 
-        public static Dictionary<string,string> GetDocumentGroupList()
+        internal static Dictionary<string, string> GetBaseUrlList()
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            try
+            {
+                // Get the MyUrls section.
+                CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
+
+                if (myCustomPropertiesSection == null)
+                {
+                    logger.Log("Failed to load UrlsSection.");
+                }
+                else
+                {
+                    foreach (UrlConfigElement urlConfigElement in myCustomPropertiesSection.Urls)
+                    {
+                        result.Add(urlConfigElement.Name, urlConfigElement.Url + ":" + urlConfigElement.Port);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error reading configuration file. Reason: " + ex.Message, "IDM Tools", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                logger.Log(ex.Message);
+            }
+            finally
+            {
+                if (result.Count == 0)
+                {
+                    result.Add("NO_DOCUMENT_GROUPS_FOUND", "No Document Groups found");
+                }
+            }
+
+            return result;
+        }
+
+        internal static Dictionary<string,string> GetDocumentGroupList()
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
 
@@ -142,7 +210,7 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             return result;
         }
 
-        public static string GetDefaultDocumentGroup()
+        internal static string GetDefaultDocumentGroup()
         {
             string result = "";
 
@@ -160,7 +228,7 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             return result;
         }
 
-        public static string GetDefaultBaseUrlName()
+        internal static string GetDefaultBaseUrlName()
         {
             string result = "";
 
@@ -176,6 +244,43 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             }
 
             return result;
+        }
+
+        internal static void SetDefaultBaseUrl(string baseUrlName)
+        {
+            CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
+            myCustomPropertiesSection.Urls.Default = baseUrlName;
+
+            //configuration.SaveAs(@"D:/cfg_dbu.xml", ConfigurationSaveMode.Full);
+
+            try
+            {
+                configuration.Save(ConfigurationSaveMode.Modified);
+                //configuration.SaveAs(Assembly.GetExecutingAssembly().Location + @"/cfg_dbu.xml", ConfigurationSaveMode.Modified);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Not able to save.");
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        internal static void SetDefaultDocumentGroup(string documentType)
+        {
+            CustomPropertiesSection myCustomPropertiesSection = configuration.GetSection("customProperties") as CustomPropertiesSection;
+            myCustomPropertiesSection.DocumentGroups.Default = documentType;
+
+            //configuration.SaveAs(@"D:/cfg_ddg.xml", ConfigurationSaveMode.Full);
+            try
+            {
+                configuration.Save(ConfigurationSaveMode.Modified);
+                //configuration.SaveAs(Assembly.GetExecutingAssembly().Location + @"/cfg_ddg.xml", ConfigurationSaveMode.Modified);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Not able to save.");
+                MessageBox.Show(ex.Message);
+            }
         }
 
     }

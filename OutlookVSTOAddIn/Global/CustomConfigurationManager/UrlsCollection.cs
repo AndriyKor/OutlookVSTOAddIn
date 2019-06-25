@@ -77,6 +77,11 @@ namespace OutlookVSTOAddIn.Global.CustomConfigurationManager
             {
                 return (string)base["default"];
             }
+
+            set
+            {
+                base["default"] = value;
+            }
         }
 
         public UrlConfigElement this[int index]

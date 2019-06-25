@@ -37,14 +37,18 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.groupTaskPaneManager = this.Factory.CreateRibbonGroup();
             this.toggleButtonShowTaskPane = this.Factory.CreateRibbonToggleButton();
+            this.groupProperties = this.Factory.CreateRibbonGroup();
+            this.toggleButtonSettings = this.Factory.CreateRibbonToggleButton();
             this.tab1.SuspendLayout();
             this.groupTaskPaneManager.SuspendLayout();
+            this.groupProperties.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab1
             // 
             this.tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office;
             this.tab1.Groups.Add(this.groupTaskPaneManager);
+            this.tab1.Groups.Add(this.groupProperties);
             this.tab1.Label = "IDM (DAF)";
             this.tab1.Name = "tab1";
             // 
@@ -57,11 +61,26 @@
             // toggleButtonShowTaskPane
             // 
             this.toggleButtonShowTaskPane.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.toggleButtonShowTaskPane.Image = global::OutlookVSTOAddIn.Properties.Resources.SaveIcon;
-            this.toggleButtonShowTaskPane.Label = "Save Email";
+            this.toggleButtonShowTaskPane.Label = "Archive Email";
             this.toggleButtonShowTaskPane.Name = "toggleButtonShowTaskPane";
+            this.toggleButtonShowTaskPane.OfficeImageId = "AutoArchiveSettings";
             this.toggleButtonShowTaskPane.ShowImage = true;
-            this.toggleButtonShowTaskPane.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.toggleButtonShowTaskPane_Click);
+            this.toggleButtonShowTaskPane.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.toggleButton_Click);
+            // 
+            // groupProperties
+            // 
+            this.groupProperties.Items.Add(this.toggleButtonSettings);
+            this.groupProperties.Label = "Properties";
+            this.groupProperties.Name = "groupProperties";
+            // 
+            // toggleButtonSettings
+            // 
+            this.toggleButtonSettings.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.toggleButtonSettings.Label = "Settings";
+            this.toggleButtonSettings.Name = "toggleButtonSettings";
+            this.toggleButtonSettings.OfficeImageId = "CurrentViewSettings";
+            this.toggleButtonSettings.ShowImage = true;
+            this.toggleButtonSettings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.toggleButton_Click);
             // 
             // ManageTaskPaneRibbon
             // 
@@ -73,6 +92,8 @@
             this.tab1.PerformLayout();
             this.groupTaskPaneManager.ResumeLayout(false);
             this.groupTaskPaneManager.PerformLayout();
+            this.groupProperties.ResumeLayout(false);
+            this.groupProperties.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -81,6 +102,8 @@
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupTaskPaneManager;
         internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton toggleButtonShowTaskPane;
         internal Microsoft.Office.Tools.Ribbon.RibbonTab tab1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupProperties;
+        internal Microsoft.Office.Tools.Ribbon.RibbonToggleButton toggleButtonSettings;
     }
 
     partial class ThisRibbonCollection
