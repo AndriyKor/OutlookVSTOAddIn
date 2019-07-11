@@ -235,6 +235,7 @@ namespace OutlookVSTOAddIn
                             textBox.Left = 29;
                             textBox.Font = new Font("Calibri", (float)9.75);
                             textBox.Width = 240;
+
                             // Size property is NOT zero only for Type 1
                             // Otherwise - use length of maximun value
                             if (attr.type == "1")
@@ -245,6 +246,19 @@ namespace OutlookVSTOAddIn
                             {
                                 textBox.MaxLength = attr.max.Length;
                             }
+
+                            // Fill in Division value
+                            if (attr.name == "M3_DIVI")
+                            {
+                                var value = entity.name.Substring(entity.name.Length - 3, 3);
+
+                                if (int.TryParse(value, out var result))
+                                {
+                                    textBox.Text = value;
+                                }
+
+                            }
+
                             textBox.AllowDrop = true;
                             textBox.DragEnter += TextBox_DragEnter;
                             textBox.DragDrop += TextBox_DragDrop;

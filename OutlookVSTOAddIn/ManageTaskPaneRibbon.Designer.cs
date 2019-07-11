@@ -72,6 +72,7 @@
             this.groupProperties.Items.Add(this.toggleButtonSettings);
             this.groupProperties.Label = "Properties";
             this.groupProperties.Name = "groupProperties";
+            this.groupProperties.Visible = false;
             // 
             // toggleButtonSettings
             // 

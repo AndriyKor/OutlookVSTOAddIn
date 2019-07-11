@@ -373,10 +373,7 @@ namespace OutlookVSTOAddIn.Global
             }
         }
 
-        public static Uri BaseUrl
-        {
-            get { return client.BaseAddress; }
-        }
+        public static Uri BaseUrl => client.BaseAddress;
 
         // Default Static Constructor
         static IDMToolsAsync()
